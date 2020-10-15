@@ -12,7 +12,7 @@ const OurServicesDetails = ({ services }) => {
             {
                 services.image ? <img src={`data:image/png;base64,${services.image.img}`} alt=""/>
                 :
-                <img src={`http://localhost:5000/${services.img}`} style={{width:'20%'}} alt=""/>
+                <img src={`https://tranquil-beach-52858.herokuapp.com/${services.img}`} style={{width:'20%'}} alt=""/>
             }
             <div className="mt-3">
                 <h4><b>{services.title}</b></h4>

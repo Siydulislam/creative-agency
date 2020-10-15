@@ -23,7 +23,7 @@ const Order = () => {
         formData.append('email', order.email);
         formData.append('projectName', order.projectName);
         formData.append('projectDetails', order.projectDetails);
-        fetch('http://localhost:5000/orders/', {
+        fetch('https://tranquil-beach-52858.herokuapp.com/orders/', {
             method: 'POST',
             body: formData
         })

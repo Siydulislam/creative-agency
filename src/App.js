@@ -44,12 +44,12 @@ function App() {
             <PrivateRoute path="/order-list">
               <OrderList></OrderList>
             </PrivateRoute>
-            <PrivateRoute path="/add-service">
+            <Route path="/add-service">
               <AddService></AddService>
-            </PrivateRoute>
-            <PrivateRoute path="/make-admin">
+            </Route>
+            <Route path="/make-admin">
               <MakeAdmin></MakeAdmin>
-            </PrivateRoute>
+            </Route>
         </Switch>
       </Router>
     </UserContext.Provider>

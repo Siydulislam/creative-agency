@@ -21,7 +21,7 @@ const Review = () => {
         formData.append('name', review.name);
         formData.append('designation', review.designation);
         formData.append('description', review.description);
-        fetch('http://localhost:5000/addReviews/', {
+        fetch('https://tranquil-beach-52858.herokuapp.com/addReviews/', {
             method: 'POST',
             body: formData
         })

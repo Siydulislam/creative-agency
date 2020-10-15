@@ -21,7 +21,7 @@ const AddService = () => {
         formData.append('file', file);
         formData.append('title', service.title);
         formData.append('description', service.description);
-        fetch('http://localhost:5000/addServices/', {
+        fetch('https://tranquil-beach-52858.herokuapp.com/addServices', {
             method: 'POST',
             body: formData
         })

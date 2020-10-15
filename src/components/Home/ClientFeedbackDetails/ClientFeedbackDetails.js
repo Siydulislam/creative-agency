@@ -8,7 +8,7 @@ const ClientFeedbackDetails = ({ reviews }) => {
                 {
                     reviews.image ? <img src={`data:image/png;base64,${reviews.image.img}`} alt=""/>
                     :
-                    <img src={`http://localhost:5000/${reviews.img}`} alt="" style={{width: '20%'}}/>
+                    <img src={`https://tranquil-beach-52858.herokuapp.com/${reviews.img}`} alt="" style={{width: '20%'}}/>
                 }
                 <div className="text-left ml-3">
                     <h5>{reviews.name}</h5>
