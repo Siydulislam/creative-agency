@@ -4,6 +4,7 @@ import Sidebar from '../../Sidebar/Sidebar';
 const Review = () => {
     const [review, setReview] = useState({});
     const [file, setFile] = useState(null);
+    
     const handleBlur = e => {
         const newReview = {...review};
         newReview[e.target.name] = e.target.value;
@@ -28,9 +29,6 @@ const Review = () => {
         .then(response => response.json())
             .then(data => {
                 console.log(data)
-            })
-            .catch(error => {
-                console.error(error)
             })
     }
 
