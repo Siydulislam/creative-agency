@@ -5,6 +5,7 @@ import Sidebar from '../../Sidebar/Sidebar';
 const AddService = () => {
     const [service, setService] = useState({});
     const [file, setFile] = useState(null);
+
     const handleBlur = e => {
         const newService = {...service};
         newService[e.target.name] = e.target.value;
@@ -27,10 +28,7 @@ const AddService = () => {
         })
         .then(response => response.json())
             .then(data => {
-                console.log(data)
-            })
-            .catch(error => {
-                console.error(error)
+                console.log(data);
             })
     }
 

@@ -19,17 +19,27 @@ const Login = () => {
     }
     
     const handleGoogleSignIn = () => {
-        var provider = new firebase.auth.GoogleAuthProvider();
+        const provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth().signInWithPopup(provider).then(function(result) {
             const {displayName, email} = result.user;
             const signedInUser = {name: displayName, email} 
             setLoggedInUser(signedInUser);
-            history.replace(from);
-            // ...
+            storeAuthToken();
           }).catch(function(error) {
             const errorMessage = error.message;
             console.log(errorMessage);
           });
+    }
+
+    const storeAuthToken = () => {
+        firebase.auth().currentUser.getIdToken(true)
+            .then(idToken => {
+                sessionStorage.setItem('token', idToken);
+                history.replace(from);
+            })
+            .catch(error => {
+                console.log(error)
+            });
     }
     return (
         <div className="jumbotron text-center">

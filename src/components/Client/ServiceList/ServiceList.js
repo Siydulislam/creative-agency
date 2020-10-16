@@ -5,7 +5,7 @@ import ServiceListDetails from '../ServiceListDetails/ServiceListDetails';
 const ServiceList = () => {
     const [serviceList, setServiceList] = useState([]);
      useEffect(() => {
-         fetch('https://tranquil-beach-52858.herokuapp.com/servicesList/')
+         fetch('https://tranquil-beach-52858.herokuapp.com/servicesList')
          .then(res => res.json())
          .then(data => setServiceList(data))
      }, []);

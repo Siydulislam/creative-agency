@@ -17,6 +17,7 @@ import OrderList from './components/Admin/OrderList/OrderList';
 import ServiceList from './components/Client/ServiceList/ServiceList';
 import MakeAdmin from './components/Admin/MakeAdmin/MakeAdmin';
 import PrivateRoute from './components/Login/PrivateRoute';
+import PageNotFound from './components/PageNotFound/PageNotFound';
 
 export const UserContext = createContext();
 
@@ -44,12 +45,15 @@ function App() {
             <PrivateRoute path="/order-list">
               <OrderList></OrderList>
             </PrivateRoute>
-            <Route path="/add-service">
+            <PrivateRoute path="/add-service">
               <AddService></AddService>
-            </Route>
-            <Route path="/make-admin">
+            </PrivateRoute>
+            <PrivateRoute path="/make-admin">
               <MakeAdmin></MakeAdmin>
-            </Route>
+            </PrivateRoute>
+            <Route path="*">
+              <PageNotFound></PageNotFound>
+          </Route>
         </Switch>
       </Router>
     </UserContext.Provider>

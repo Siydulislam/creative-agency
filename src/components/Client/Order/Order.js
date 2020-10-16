@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import Sidebar from '../../Sidebar/Sidebar';
 
 const Order = () => {
@@ -23,16 +22,14 @@ const Order = () => {
         formData.append('email', order.email);
         formData.append('projectName', order.projectName);
         formData.append('projectDetails', order.projectDetails);
+        formData.append('projectName', order.price);
         fetch('https://tranquil-beach-52858.herokuapp.com/orders/', {
             method: 'POST',
             body: formData
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data)
-        })
-        .catch(error => {
-            console.error(error)
+            console.log(data);
         })
     }
 
@@ -65,7 +62,7 @@ const Order = () => {
                                 <input onChange={handleFileChange} type="file" className="form-control w-75" id="exampleInputPassword1" placeholder="Picture" required/>
                             </div>
                         </div>
-                        <Link to="/service-list"><button type="submit" className="btn btn-success mt-3">Submit</button></Link>
+                        <button type="submit" className="btn btn-success mt-3">Submit</button>
                     </form>
                 </div>
             </div>

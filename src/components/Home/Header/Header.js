@@ -1,4 +1,5 @@
 import React from 'react';
+import './Header.css';
 import HeaderMain from '../HeaderMain/HeaderMain';
 import Navbar from '../Navbar/Navbar';
 import OurClient from '../OurClient/OurClient';
@@ -6,7 +7,7 @@ import OurClient from '../OurClient/OurClient';
 const Header = () => {
     return (
         <section>
-            <div style={{backgroundColor: '#FBD062'}}>
+            <div className="header-background">
                 <Navbar></Navbar>
                 <HeaderMain></HeaderMain>
             </div>
