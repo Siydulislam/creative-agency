@@ -1,6 +1,6 @@
 # [Creative Agency](https://creative-agency-eba73.web.app/)
 
-## Features:
+## A full-stack web app where the user can order a specific service, monitor whether the order is done or pending. Users can also give a review of the completed order. There is also an admin panel where an admin can see all the services, add new services, and make another person an admin.
 
 
 ### `npm start`
