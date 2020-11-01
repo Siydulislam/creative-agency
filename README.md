@@ -16,6 +16,8 @@
     - Front-End
       - React JS
       - React Router
+      - Private Route
+      - Bootstrap4
     - Back-End
       - Node JS
       - Express JS
