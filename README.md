@@ -1,6 +1,7 @@
-## Live [Creative Agency](https://creative-agency-eba73.web.app/)
+# [Creative Agency](https://creative-agency-eba73.web.app/)
 
-In the project directory, you can run:
+## Features:
+
 
 ### `npm start`
 
