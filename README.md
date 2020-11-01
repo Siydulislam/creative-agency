@@ -1,6 +1,6 @@
 # [Creative Agency](https://creative-agency-eba73.web.app/)
 
-## Features:
+Features:
 
     - A full-stack web application.
     - User can order specific services.
