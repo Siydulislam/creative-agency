@@ -1,37 +1,41 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { UserContext } from '../../../App';
 import Sidebar from '../../Sidebar/Sidebar';
+import SweetAlert from 'react-bootstrap-sweetalert';
+import './Order.css';
 
 const Order = () => {
-    const [order, setOrder] = useState({});
-    const [file, setFile] = useState(null);
-    const handleBlur = e => {
-        const newOrder = {...order};
-        newOrder[e.target.name] = e.target.value;
-        setOrder(newOrder);
-    }
-
-    const handleFileChange = (e) => {
-        const newFile = e.target.files[0];
-        setFile(newFile);
-    }
-
-    const handleOrder = () => {
+    const { register, handleSubmit, errors } = useForm();
+    const { loggedInUser } = useContext(UserContext);
+    const [formSubmitStatus, setFormSubmitStatus] = useState("");
+    
+    const onSubmit = ( data ) => {
+        console.log(data);
+        const status = "Pending";
         const formData = new FormData();
-        formData.append('file', file);
-        formData.append('name', order.name);
-        formData.append('email', order.email);
-        formData.append('projectName', order.projectName);
-        formData.append('projectDetails', order.projectDetails);
-        formData.append('projectName', order.price);
-        fetch('https://tranquil-beach-52858.herokuapp.com/orders/', {
+        formData.append('name', data.name);
+        formData.append('email', data.email);
+        formData.append('projectName', data.projectName);
+        formData.append('projectDetails', data.projectDetails);
+        formData.append('projectName', data.price);
+        formData.append('status', status);
+        formData.append('file', data.image[0]);
+
+        fetch('https://tranquil-beach-52858.herokuapp.com/addOrders/', {
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
+        .then(res => res.json())
         .then(data => {
-            console.log(data);
-        })
-    }
+            if (data) {
+                setFormSubmitStatus("Your order has been placed successfully!");
+                document.getElementById("orderForm").reset();
+            } else {
+                setFormSubmitStatus("Opps... Something went wrong!");
+            }
+        });
+    };
 
     return (
         <div className="row">
@@ -39,30 +43,139 @@ const Order = () => {
                 <Sidebar></Sidebar>
             </div>
             <div className="container col-md-9 mt-5">
-                <h2><b>Order</b></h2>
+                <div className="d-flex justify-content-between">
+                    <div>
+                        <h2><b>Order</b></h2>
+                    </div>
+                    <div>
+                        <h4><b>{loggedInUser.name}</b></h4>
+                    </div>
+                </div>
                 <div className="jumbotron">
-                    <form onClick={handleOrder}>
+                    {formSubmitStatus && (
+                        <SweetAlert
+                            type={
+                                formSubmitStatus.includes("placed") ? "success" : "danger"
+                            }
+                            title={
+                                formSubmitStatus.includes("placed") ? "Thank you!" : "Oops!"
+                            }
+                            onConfirm={() => setFormSubmitStatus("")}
+                        >
+                            {formSubmitStatus}
+                        </SweetAlert>
+                    )}
+                    <form id="orderForm" onSubmit={handleSubmit(onSubmit)}>
                         <div className="bgAddService">
                             <div className="form-group">
-                                <input onBlur={handleBlur} type="text" className="form-control w-75" name="name" placeholder="Your name/ Company's name" required/>
+                                <input 
+                                    type="text" 
+                                    className="form-control w-100" 
+                                    name="name" 
+                                    placeholder="Your name/ Company's name" 
+                                    ref={register({
+                                        required: "Your name/company name is required",
+                                        pattern: {
+                                            value: /[A-Za-z]{3}/,
+                                            message: "Name must contain minimum 3 letters and only letter"
+                                        },
+                                    })}
+                                />
+                                {errors.name && (
+                                    <span className="error">{errors.name.message}</span>
+                                )}
                             </div>
                             <div className="form-group">
-                                <input onBlur={handleBlur} type="email" className="form-control w-75" name="email" placeholder="Your email address" required/>
+                                <input
+                                    type="email" 
+                                    className="form-control w-100" 
+                                    name="email" 
+                                    placeholder="Your email address" 
+                                    ref={register({
+                                        required: "Email Required",
+                                        pattern: {
+                                            value: /^([a-zA-Z0-9_\-\\.]+)@([a-zA-Z0-9_\-\\.]+)\.([a-zA-Z]{2,5})$/,
+                                            message: "Enter a valid email",
+                                        },
+                                    })}
+                                />
+                                {errors.email && (
+                                    <span className="error">{errors.email.message}</span>
+                                )}
                             </div>
                             <div className="form-group">
-                                <input onBlur={handleBlur} type="text" className="form-control w-75" name="projectName" placeholder="Project name" required/>
+                                <input
+                                    type="text" 
+                                    className="form-control w-100" 
+                                    name="projectName" 
+                                    placeholder="Project name" 
+                                    ref={register({
+                                        required: "Project name is required",
+                                        pattern: {
+                                            value: /[A-Za-z]{3}/,
+                                            message:
+                                            "Project name must contain minimum 3 letter and only letter"
+                                        },
+                                    })}
+                                />
+                                {errors.projectName && (
+                                    <span className="error">{errors.projectName.message}</span>
+                                )}
                             </div>
                             <div className="form-group">
-                                <textarea onBlur={handleBlur} type="text" className="form-control w-75" name="projectDetails" placeholder="Project details" cols="30" rows="10" required></textarea>
+                                <textarea
+                                    type="text" 
+                                    className="form-control w-100" 
+                                    name="projectDetails" 
+                                    placeholder="Project details" 
+                                    cols="30" 
+                                    rows="10" 
+                                    ref={register({
+                                        required: "Project details is required",
+                                        pattern: {
+                                          value: /^([a-zA-Z0-9 ]{10,400})/,
+                                          message: "Project details must contain between 10-40 char ",
+                                        },
+                                      })}
+                                />
+                                {errors.projectDetails && (
+                                    <span className="error">{errors.projectDetails.message}</span>
+                                )}
                             </div>
-                            <div className="form-group">
-                                <input type="number" className="form-control w-75" name="price" placeholder="Price" required/>
+                            <div className="w-50 pr-1 float-left">
+                                <input
+                                    type="number" 
+                                    className="form-control" 
+                                    name="price" 
+                                    placeholder="Price"
+                                    ref={register({
+                                        required: "Price is required",
+                                    })}
+                                />
+                                {errors.price && (
+                                    <span className="error">{errors.price.message}</span>
+                                )}
                             </div>
-                            <div className="form-group">
-                                <input onChange={handleFileChange} type="file" className="form-control w-75" id="exampleInputPassword1" placeholder="Picture" required/>
+                            <div className="w-50 pl-1 float-right">
+                                <label className="custom-file-upload">
+                                    <input
+                                        type="file" 
+                                        className="form-control" 
+                                        name="image" 
+                                        placeholder="Picture"
+                                        ref={register({
+                                            required: "Image is required",
+                                        })}
+                                    />
+                                    <img src="https://i.imgur.com/B4jPPfH.png" alt=""/>
+                                    Upload Project File
+                                </label>
+                                {errors.image && (
+                                    <span className="error">{errors.image.message}</span>
+                                )}
                             </div>
                         </div>
-                        <button type="submit" className="btn btn-success mt-3">Submit</button>
+                        <input type="submit" value="Submit" className="btn btn-success mt-3"/>
                     </form>
                 </div>
             </div>

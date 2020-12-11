@@ -5,7 +5,7 @@ const OurServices = () => {
     const [services, setServices] = useState([]);
 
     useEffect(() => {
-        fetch('https://tranquil-beach-52858.herokuapp.com/services')
+        fetch('https://tranquil-beach-52858.herokuapp.com/getServices')
         .then(res => res.json())
         .then(data => setServices(data))
     }, []);

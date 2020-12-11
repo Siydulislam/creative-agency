@@ -6,7 +6,7 @@ const ClientFeedback = () => {
     const [reviews, setReviews] = useState([]);
 
     useEffect(() => {
-        fetch('https://tranquil-beach-52858.herokuapp.com/reviews/')
+        fetch('https://tranquil-beach-52858.herokuapp.com/getReviews/')
         .then(res => res.json())
         .then(data => setReviews(data))
     }, []);
